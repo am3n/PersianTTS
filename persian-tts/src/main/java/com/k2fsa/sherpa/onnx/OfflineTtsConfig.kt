@@ -1,7 +1,9 @@
 package com.k2fsa.sherpa.onnx
 
 import android.content.Context
+import androidx.annotation.Keep
 
+@Keep
 data class OfflineTtsConfig(
     var model: OfflineTtsModelConfig,
     var ruleFsts: String = "",

@@ -2,9 +2,11 @@ package com.k2fsa.sherpa.onnx
 
 import android.content.Context
 import android.util.Log
+import androidx.annotation.Keep
 import java.io.File
 import java.io.FileOutputStream
 
+@Keep
 object Utils {
 
     internal fun copyDataDir(context: Context, dataDir: String): String {

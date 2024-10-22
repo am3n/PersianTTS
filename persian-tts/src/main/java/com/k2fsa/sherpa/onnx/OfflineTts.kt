@@ -1,7 +1,9 @@
 package com.k2fsa.sherpa.onnx
 
 import android.content.res.AssetManager
+import androidx.annotation.Keep
 
+@Keep
 class OfflineTts(
     assetManager: AssetManager? = null,
     private var config: OfflineTtsConfig

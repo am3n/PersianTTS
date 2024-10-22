@@ -1,5 +1,8 @@
 package com.k2fsa.sherpa.onnx
 
+import androidx.annotation.Keep
+
+@Keep
 data class OfflineTtsVitsModelConfig(
     var model: String,
     var lexicon: String = "",

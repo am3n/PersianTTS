@@ -1,5 +1,8 @@
 package com.k2fsa.sherpa.onnx
 
+import androidx.annotation.Keep
+
+@Keep
 class GeneratedAudio(
     val samples: FloatArray,
     val sampleRate: Int,
