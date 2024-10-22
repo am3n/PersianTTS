@@ -16,13 +16,14 @@ object Utils {
         try {
             val assets = context.assets.list(path)
             if (assets!!.isEmpty()) {
-                copyFile(context, path)
+                val newPath = context.getExternalFilesDir(null).toString() + "/" + path
+                if (!File(newPath).isFile) {
+                    copyFile(context, path, newPath)
+                }
             } else {
-                val fullPath = "${context.getExternalFilesDir(null)}/$path"
-                File(fullPath).apply { mkdirs() }
+                File("${context.getExternalFilesDir(null)}/$path").apply { mkdirs() }
                 for (asset in assets.iterator()) {
-                    val p: String = if (path == "") "" else "$path/"
-                    copyAssets(context, "$p$asset")
+                    copyAssets(context, "${if (path == "") "" else "$path/"}$asset")
                 }
             }
         } catch (t: Throwable) {
@@ -30,13 +31,11 @@ object Utils {
         }
     }
 
-    private fun copyFile(context: Context, filename: String) {
+    private fun copyFile(context: Context, path: String, newPath: String) {
         try {
-            val istream = context.assets.open(filename)
-            val newFilename = context.getExternalFilesDir(null).toString() + "/" + filename
-            val ostream = FileOutputStream(newFilename)
-            // Log.i(TAG, "Copying $filename to $newFilename")
-            val buffer = ByteArray(1024)
+            val istream = context.assets.open(path)
+            val ostream = FileOutputStream(newPath)
+            val buffer = ByteArray(64 * 1024)
             var read = 0
             while (read != -1) {
                 ostream.write(buffer, 0, read)
@@ -46,7 +45,7 @@ object Utils {
             ostream.flush()
             ostream.close()
         } catch (t: Throwable) {
-            Log.e("SherpaOnnxTts", "Utils > Failed to copy $filename, $t")
+            Log.e("SherpaOnnxTts", "Utils > Failed to copy $path, $t")
         }
     }
 

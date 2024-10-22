@@ -6,6 +6,8 @@ import android.media.AudioFormat
 import android.media.AudioManager
 import android.media.AudioTrack
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.util.Log
@@ -14,6 +16,7 @@ import com.k2fsa.sherpa.onnx.OfflineTts
 import com.k2fsa.sherpa.onnx.OfflineTtsConfig
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.concurrent.thread
 
 typealias UtteranceProgressListener = UtteranceProgressListener
 typealias OnInitListener = TextToSpeech.OnInitListener
@@ -43,17 +46,19 @@ class PersianTextToSpeech(
     private val tasks = mutableListOf<Task>()
 
     init {
-        try {
-            val speakers = initOfflineTTS(context)
-            if (speakers <= 0) {
-                shutdownOfflineTTS()
-                throw Exception("TTS number of speakers is zero")
+        thread {
+            try {
+                val speakers = initOfflineTTS(context)
+                if (speakers <= 0) {
+                    shutdownOfflineTTS()
+                    throw Exception("TTS number of speakers is zero")
+                }
+                initAudioTrack()
+                Handler(Looper.getMainLooper()).post { onInitListener.onInit(SUCCESS) }
+            } catch (t: Throwable) {
+                Log.e(TAG, "init", t)
+                Handler(Looper.getMainLooper()).post { onInitListener.onInit(ERROR) }
             }
-            initAudioTrack()
-            onInitListener.onInit(SUCCESS)
-        } catch (t: Throwable) {
-            Log.e(TAG, "init", t)
-            onInitListener.onInit(ERROR)
         }
     }
 

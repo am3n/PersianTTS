@@ -16,8 +16,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val now = System.currentTimeMillis()
+
         textToSpeech = PersianTextToSpeech(context = this) { state ->
             Handler(Looper.getMainLooper()).postDelayed({
+
+                Log.d("Meeee", "initialized after ${System.currentTimeMillis() - now} ms")
 
                 if (state == 0) {
 
