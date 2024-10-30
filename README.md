@@ -1,8 +1,8 @@
-# PersianTTS
+# Android Persian TTS
 ![MinAPI](https://img.shields.io/badge/API-21%2B-blue)
 [![Release](https://jitpack.io/v/am3n/PersianTTS.svg)](https://jitpack.io/#am3n/PersianTTS)
 
-<b>Persian text to speech android library based on Sherpa ONNX &amp; eSpeak</b>
+<b>Android persian text to speech android library based on Sherpa ONNX &amp; eSpeak</b>
 
 ## Resources
 
