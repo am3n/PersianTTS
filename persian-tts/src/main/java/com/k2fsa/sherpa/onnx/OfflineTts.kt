@@ -11,6 +11,7 @@ class OfflineTts(
 
     companion object {
         init {
+            System.loadLibrary("onnxruntime")
             System.loadLibrary("sherpa-onnx-jni")
         }
     }

@@ -21,6 +21,8 @@ android {
         debug {
             minifyEnabled true
             shrinkResources true
+            multiDexEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'C:\\Users\\amirh\\StudioProjects\\proguard-rules-debug.pro'
         }
         release {
             minifyEnabled false
