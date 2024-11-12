@@ -21,8 +21,6 @@ android {
         debug {
             minifyEnabled true
             shrinkResources true
-            multiDexEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled false
@@ -41,12 +39,8 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.15.0'
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.multidex:multidex:2.0.1'
-
     implementation project(':persian-tts')
-    //implementation 'com.github.am3n:PersianTTS:1.0.0'
-
 }
