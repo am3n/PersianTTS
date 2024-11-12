@@ -22,7 +22,7 @@ android {
             minifyEnabled true
             shrinkResources true
             multiDexEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'C:\\Users\\amirh\\StudioProjects\\proguard-rules-debug.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled false
