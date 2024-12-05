@@ -17,6 +17,7 @@ import com.k2fsa.sherpa.onnx.OfflineTtsConfig
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.concurrent.thread
+import kotlin.random.Random
 
 typealias UtteranceProgressListener = UtteranceProgressListener
 typealias OnInitListener = TextToSpeech.OnInitListener
@@ -33,6 +34,7 @@ class PersianTextToSpeech(
         const val ERROR = TextToSpeech.ERROR
         const val QUEUE_ADD = TextToSpeech.QUEUE_ADD
         const val QUEUE_FLUSH = TextToSpeech.QUEUE_FLUSH
+        val INSTANCE_ID = Random.nextInt(999)
     }
 
     private lateinit var tts: OfflineTts
@@ -42,11 +44,11 @@ class PersianTextToSpeech(
 
     private var speechRate: Float = 1.0f
 
-    private var executor: ExecutorService = Executors.newSingleThreadExecutor()
+    private var executor: ExecutorService = Executors.newSingleThreadExecutor { r -> Thread(r, "Persian TTS thread [$INSTANCE_ID]") }
     private val tasks = mutableListOf<Task>()
 
     init {
-        thread {
+        thread(name = "Persian TTS thread init") {
             try {
                 val speakers = initOfflineTTS(context)
                 if (speakers <= 0) {
@@ -294,7 +296,7 @@ class PersianTextToSpeech(
             track.flush()
             track.stop()
             isSpeaking = false
-            executor = Executors.newSingleThreadExecutor()
+            executor = Executors.newSingleThreadExecutor { r -> Thread(r, "Persian TTS thread [$INSTANCE_ID]") }
         } catch (t: Throwable) {
             t.printStackTrace()
         }
